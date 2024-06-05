@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if map_path %}
+    <img src="{{ map_path }}" alt="Captured Map">
+{% endif %}
+<form action="{% url 'responsable' %}" method="post">
+  {% csrf_token %}
+
+  
+</form>
+<form action="{% url 'generate-and-download-image' %}" method="post">
+  {% csrf_token %}
+
+  <button type="submit" onclick="getLocation2()" name="key">Generate image</button>
+</form>
+
+
+</script>   
+
+{{map|safe}}
+
+
+
+
+
+<body>
+
+    <div id="profileImage"></div>
+    {{form_generate_Image}}
+    <button type="submit" onclick="fetchImageData()" name="key">Generate image</button>
+    
+      <!-- Image element to display the profile image -->
+      <img id="profileImage" alt="Profile Image" style="max-width: 100%; height: auto;">
+      <!-- Download link (initially hidden) --> 
+      <a id="downloadLink" style="display: none;">Download Image</a>
+
+    <script>
+      
+
+    // Define the URL of your endpoint
+
+
+// Function to fetch and handle the image data
+// Define the URL of your endpoint
+
+
+// Function to fetch and handle the image data
+async function fetchImageData() {
+    const url = '/generate-and-download-image/';
+    try {
+        // Make the request using fetch
+        let response = await fetch(url);
+        
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+
+        // Convert the response to JSON
+        let data = await response.json();
+
+        // Access the image data
+        let imageUrl = data.image_data;
+        console.log(imageUrl);
+
+        // Use the image data (for example, set it as the src of an image element)
+        document.getElementById('profileImage').src = imageUrl; 
+
+        // Update the download link
+        let downloadLink = document.getElementById('downloadLink');
+        downloadLink.href = imageUrl;
+        downloadLink.download = 'profile_image.jpg'; // You can specify the file name here
+        downloadLink.style.display = 'block'; // Make the link visible
+
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+}
+
+        // Get the iframe element
+        
+      
+        // Function to handle the scroll event
+        function handleScroll(event) {
+            var scrollLeft = iframe.contentWindow.scrollX || iframe.contentDocument.documentElement.scrollLeft;
+            var scrollTop = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+            console.log('Scroll Left:', scrollLeft);
+            console.log('Scroll Top:', scrollTop);
+        }
+      
+        // Add scroll event listener to the iframe content window
+        
+      </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/main-map/')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('map').innerHTML = html;
+            })
+            .catch(error => console.error('Error fetching dynamic content:', error));
+        });
+
+
+
+        var iframe = null
+        function checkIframe() {
+             iframe = document.getElementsByTagName('iframe')[0];
+            if (typeof iframe === 'undefined' || iframe === null) {
+              console.log('Iframe undefined, creating...');
+              
+            } else {
+              console.log('Iframe defined, stopping loop');
+              // console.log(iframe) 
+              iframe.contentWindow.addEventListener('scroll', handleScroll);
+              clearInterval(interval); // Stop the loop
+            }
+          }
+          var interval = setInterval(checkIframe, 2000);
+
+
+
+
+    </script>
+
+<script>
+
+    </script>
+</body>
+</html>
+
+<button type="submit" onclick="Scalee()" name="key">Scale</button>
+<script>
+  function Scalee(){
+    var iframe = document.getElementsByTagName('iframe')[0]
+   
+        function createCustomCursorInIframe(iframe) {
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            const customCursor = iframeDoc.createElement('div');
+            
+            customCursor.id = 'customCursor';
+            customCursor.style.position = 'absolute';
+            customCursor.style.width = '20px';
+            customCursor.style.height = '20px';
+            customCursor.style.background = 'red';
+            customCursor.style.borderRadius = '50%';
+            customCursor.style.pointerEvents = 'none';
+            
+            iframeDoc.body.appendChild(customCursor);
+            
+            const updateCursorPosition = () => {
+                const centerX = iframe.clientWidth / 2;
+                const centerY = iframe.clientHeight / 2;
+                customCursor.style.left = `${centerX - customCursor.offsetWidth / 2}px`;
+                customCursor.style.top = `${centerY - customCursor.offsetHeight / 2}px`;
+            };
+            
+            // Initial position
+            updateCursorPosition();
+            
+            // Update position on window resize
+            window.addEventListener('resize', updateCursorPosition);
+            
+            // Update position on iframe content resize
+            iframe.contentWindow.addEventListener('resize', updateCursorPosition);
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const iframe = document.getElementById('myIframe');
+            iframe.onload = () => {
+                createCustomCursorInIframe(iframe);
+            };
+        });
+  
+
+        createCustomCursorInIframe(iframe)
+        
+        
+    var body = iframeDocument.getElementsByTagName('body')[0];
+    var divee=body.getElementsByTagName('div')[0];
+
+    console.log(divee)
+
+
+  }
+</script>
+{% endblock %}
+
+
+
+
+
+
+   

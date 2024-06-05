@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citoyen</title>
+    <style>
+        /* تحديد عرض الصورة بالشاشة بالكامل */
+        .image-container {
+            position: relative; /* جعل العنصر ذو موضع نسبي ليمكن التحكم في العناصر الفرعية */
+            width: 50%;
+            height: 50vh; /* ارتفاع الصورة يأخذ 100% من ارتفاع الشاشة */
+            object-fit: cover; /* ضمان تناسب الصورة داخل المساحة المخصصة لها دون تشويه */
+        }
+        .signup-overlay {
+            position: absolute; /* جعل العنصر ذو موضع مطلق داخل العنصر الأب */
+            top: 50%; /* تحديد الموضع العمودي للعنصر */
+            left: 50%; /* تحديد الموضع الأفقي للعنصر */
+            transform: translate(-50%, -50%); /* تعديل الموضع ليكون في الوسط */
+            background-color: rgba(133, 120, 120, 0.7); /* لون خلفية النص مع درجة شفافية */
+            padding: 20px; /* تباعد داخلي للعنصر */
+        }
+    </style>
+</head>
+<body>
+    <!-- استخدم div لتغليف الصورة والنص -->
+    <div class="image-container">
+        <!-- قم بتغليف الصورة في div لإضافة الرمز -->
+        <div class="signup-overlay">
+            <h1><a href="{% url 'generate_map' %}">Look at the map</a></h1>
+        </div>
+        <!-- Chargez les balises de modèle statique -->
+        {% load static %}
+        <!-- Utilisez la balise static للرمز المصدري -->
+        <img src="{% static 'images/image.png' %}" width="1330" height="650">
+    </div>
+</body>
+</html>
